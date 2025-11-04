@@ -42,6 +42,11 @@ Welcome to CubeCity! This is a cartoon-style 2.5D city simulation game where you
     *   切换到此模式，点击不再需要的建筑即可将其拆除。
     *   拆除建筑会返还部分建造成本。
 
+### 一键部署
+本项目可以一键部署到Vercel平台：
+
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nanbingxyz/daily-commit-summarizer)
+
 ## 🛠️ 技术栈
 
 *   **核心渲染:** [Three.js](https://threejs.org/)
