@@ -7,6 +7,7 @@ import DashboardFooter from './components/DashboardFooter.vue'
 import GameCanvas from './components/GameCanvas.vue'
 import DialogLayer from './components/layers/DialogLayer.vue'
 import AppLayout from './components/layout/AppLayout.vue'
+import GuideModal from './components/GuideModal.vue'
 import MapOverview from './components/MapOverview.vue'
 import ModeIndicator from './components/ModeIndicator.vue'
 import RestorePrompt from './components/RestorePrompt.vue'
@@ -16,27 +17,22 @@ import TopBar from './components/TopBar.vue'
 
 const gameState = useGameState()
 
-// 时间管理 - 统一5秒计时器
 let dayInterval = null
 let isPaused = false
 
-// 页面可见性监听 - 实现HX-43离屏暂停功能
 function handleVisibilityChange() {
   if (document.hidden && !isPaused) {
-    // 页面不可见时暂停计时器
     if (dayInterval) {
       clearInterval(dayInterval)
       isPaused = true
     }
   }
   else if (!document.hidden && isPaused) {
-    // 页面可见时恢复计时器
     startDayTimer()
     isPaused = false
   }
 }
 
-// 启动每日计时器
 function startDayTimer() {
   if (dayInterval) {
     clearInterval(dayInterval)
@@ -46,9 +42,6 @@ function startDayTimer() {
   }, 5000)
 }
 
-// 对话框由 DialogLayer 统一处理，无需在此监听或管理
-
-// ESC关闭地图总览
 function handleKeydown(e) {
   if (gameState.showMapOverview && (e.key === 'Escape' || e.key === 'Esc')) {
     gameState.setShowMapOverview(false)
@@ -57,19 +50,15 @@ function handleKeydown(e) {
 
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
-  // 启动统一的5秒计时器（集成每日收益和稳定度更新）
   startDayTimer()
-  // 监听页面可见性变化 - 实现HX-43离屏暂停功能
   document.addEventListener('visibilitychange', handleVisibilityChange)
 })
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown)
-  // 清除统一计时器
   if (dayInterval) {
     clearInterval(dayInterval)
   }
-  // 移除页面可见性监听
   document.removeEventListener('visibilitychange', handleVisibilityChange)
 })
 </script>
@@ -99,12 +88,17 @@ onUnmounted(() => {
     </template>
 
     <template #overlays>
-      <!-- 继续存档提示：需要可交互 -->
       <div class="pointer-events-auto">
         <RestorePrompt />
       </div>
 
-      <!-- 地图总览浮层：可交互 -->
+      <div class="pointer-events-auto">
+        <GuideModal 
+          :is-visible="gameState.showGuide" 
+          @close="gameState.setShowGuide(false)" 
+        />
+      </div>
+
       <div class="pointer-events-auto">
         <transition name="fade">
           <div
@@ -125,7 +119,6 @@ onUnmounted(() => {
         </transition>
       </div>
 
-      <!-- 全局提示与对话层：可交互 -->
       <div class="pointer-events-auto">
         <ToastContainer />
       </div>

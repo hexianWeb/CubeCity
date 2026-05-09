@@ -1,23 +1,23 @@
 {
-  "lang": "en-EN",
-  "name": "Vite ThreeJS — Template",
-  "short_name": "Vite Vanilla ThreeJS — Template",
-  "description": "Boilerplate template designed to quickly bootstrapping a 3D Web App, SPA, website or landing page with Three.JS, GLSL, Vite, TailwindCSS, ESLint, Husky and much more in just 30 seconds.",
+  "lang": "zh-CN",
+  "name": "工业城市模拟器",
+  "short_name": "工业城市",
+  "description": "一款基于 Three.js 的工业城市建设模拟游戏",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#000",
-  "background_color": "#000",
+  "theme_color": "#171717",
+  "background_color": "#171717",
   "icons": [
     {
-      "src": "/favicon/favicon-192.png",
+      "src": "/favicon/favicon-192.webp",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/webp"
     },
     {
-      "src": "/favicon/favicon-512.png",
+      "src": "/favicon/favicon-512.webp",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/webp",
       "purpose": "maskable"
     }
   ]
