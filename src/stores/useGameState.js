@@ -27,6 +27,7 @@ export const useGameState = defineStore('gameState', {
     citySize: 16,
     language: 'en',
     showMapOverview: false,
+    showGuide: false,
 
     // 音乐系统状态
     musicEnabled: false,
@@ -278,6 +279,9 @@ export const useGameState = defineStore('gameState', {
     },
     setShowMapOverview(val) {
       this.showMapOverview = val
+    },
+    setShowGuide(val) {
+      this.showGuide = val
     },
     /**
      * 进入下一天，更新金币和稳定度

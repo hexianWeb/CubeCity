@@ -50,6 +50,10 @@ export default class Interactor {
 
     this.lastMode = null // 用于检测游戏模式是否发生变化
 
+    // --- 性能优化 ---
+    this.lastRaycast = 0 // 上次射线检测时间
+    this.raycastInterval = 100 // 射线检测间隔（毫秒）
+
     // --- 初始化 ---
     this._bindEvents()
   }
@@ -97,6 +101,10 @@ export default class Interactor {
    */
   _onMouseMove() {
     this._handleModeChange()
+
+    const now = Date.now()
+    if (now - this.lastRaycast < this.raycastInterval) return
+    this.lastRaycast = now
 
     const newFocusedTile = getIntersectedTile(this.raycaster, this.iMouse, this.camera, this.cityGroup)
     this._updateFocus(newFocusedTile)

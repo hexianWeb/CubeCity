@@ -55,7 +55,7 @@ export default class Camera {
         34,
         this.sizes.width / this.sizes.height,
         0.1,
-        100,
+        250,
       )
     }
 

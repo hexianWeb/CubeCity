@@ -17,27 +17,24 @@ let instance
 
 export default class Experience {
   constructor(canvas) {
-    // Singleton
     if (instance) {
       return instance
     }
 
     instance = this
 
-    // Global access
     window.Experience = this
 
     this.canvas = canvas
 
-    // 事件总线
     this.eventBus = eventBus
 
-    // Panel
     this.debug = new Debug()
     this.stats = new Stats()
     this.sizes = new Sizes(this.canvas)
     this.time = new Time()
     this.scene = new THREE.Scene()
+    this.scene.fog = new THREE.Fog(0x6990b8, 50, 180)
     this.camera = new Camera(true)
     this.renderer = new Renderer()
     this.resources = new Resources(sources)
@@ -50,6 +47,10 @@ export default class Experience {
       this.resize()
     })
 
+    this.lastRenderTime = 0
+    this.targetFPS = 30
+    this.frameInterval = 1000 / this.targetFPS
+
     this.time.on('tick', () => {
       this.update()
     })
@@ -61,10 +62,17 @@ export default class Experience {
   }
 
   update() {
+    const now = performance.now()
+    const delta = now - this.lastRenderTime
+
     this.camera.update()
     this.world.update()
-    this.renderer.update() // 切换为手动更新
-    this.stats.update()
     this.iMouse.update()
+
+    if (delta >= this.frameInterval) {
+      this.lastRenderTime = now - (delta % this.frameInterval)
+      this.renderer.update()
+      this.stats.update()
+    }
   }
 }

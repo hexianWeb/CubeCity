@@ -37,6 +37,8 @@ export function canPlaceBuilding(x, y, buildingType, metadata) {
  * @returns {object|null} - 找到的 Tile 实例或 null
  */
 export function getIntersectedTile(raycaster, iMouse, camera, cityGroup) {
+  if (!cityGroup)
+    return null
   raycaster.setFromCamera(iMouse.normalizedMouse, camera)
   const intersections = raycaster.intersectObjects(cityGroup.children, true)
 

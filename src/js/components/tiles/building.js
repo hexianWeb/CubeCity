@@ -70,7 +70,7 @@ export default class Building extends SimObject {
     else {
       // 没有资源时，使用占位体
       const geometry = new THREE.BoxGeometry(0.8, 0.8, 0.8)
-      const material = new THREE.MeshStandardMaterial({ color: '#bdae93' })
+      const material = new THREE.MeshBasicMaterial({ color: '#bdae93' })
       const mesh = new THREE.Mesh(geometry, material)
       mesh.position.set(0, 0.4, 0)
       this.setMesh(mesh)
