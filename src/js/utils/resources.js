@@ -83,6 +83,15 @@ export default class Resources extends EventEmitter {
               await this.loadGLTFModelUniApp(source, onError)
             } else {
               this.loaders.gltfLoader.load(source.path, (file) => {
+                file.scene.traverse((child) => {
+                  if (child.isMesh) {
+                    child.castShadow = false
+                    child.receiveShadow = false
+                    if (child.material) {
+                      child.material.flatShading = true
+                    }
+                  }
+                })
                 this.sourceLoaded(source, file)
               }, undefined, onError)
             }
@@ -93,6 +102,10 @@ export default class Resources extends EventEmitter {
               await this.loadTextureUniApp(source, onError)
             } else {
               this.loaders.textureLoader.load(source.path, (file) => {
+                file.minFilter = THREE.LinearFilter
+                file.magFilter = THREE.LinearFilter
+                file.generateMipmaps = false
+                file.maxAnisotropy = 1
                 this.sourceLoaded(source, file)
               }, undefined, onError)
             }
@@ -211,6 +224,15 @@ export default class Resources extends EventEmitter {
         return
       }
       this.loaders.gltfLoader.parse(arrayBuffer, '', (file) => {
+        file.scene.traverse((child) => {
+          if (child.isMesh) {
+            child.castShadow = false
+            child.receiveShadow = false
+            if (child.material) {
+              child.material.flatShading = true
+            }
+          }
+        })
         this.sourceLoaded(source, file)
       }, onError)
     } catch (error) {
@@ -228,6 +250,10 @@ export default class Resources extends EventEmitter {
       const blob = new Blob([arrayBuffer])
       const url = URL.createObjectURL(blob)
       this.loaders.textureLoader.load(url, (file) => {
+        file.minFilter = THREE.LinearFilter
+        file.magFilter = THREE.LinearFilter
+        file.generateMipmaps = false
+        file.maxAnisotropy = 1
         URL.revokeObjectURL(url)
         this.sourceLoaded(source, file)
       }, undefined, (error) => {

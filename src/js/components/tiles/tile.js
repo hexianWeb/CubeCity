@@ -42,7 +42,7 @@ export default class Tile extends SimObject {
       ? grassMesh
       : new THREE.Mesh(
         new THREE.BoxGeometry(0.98, 0.2, 0.98),
-        new THREE.MeshStandardMaterial({ color: '#579649' }),
+        new THREE.MeshBasicMaterial({ color: '#579649' }),
       )
     this.grassMesh.position.set(0, 0, 0)
     this.grassMesh.scale.set(0.98, 1, 0.98)
@@ -55,7 +55,7 @@ export default class Tile extends SimObject {
       ? this.initMeshFromResource(groundResource)
       : new THREE.Mesh(
         new THREE.BoxGeometry(1, 0.2, 1),
-        new THREE.MeshStandardMaterial({ color: '#a89984' }),
+        new THREE.MeshBasicMaterial({ color: '#a89984' }),
       )
     this.groundMesh.position.set(0, 0.01, 0) // 稍微高于 grass，避免 z-fighting
     this.groundMesh.scale.set(0.98, 1, 0.98)

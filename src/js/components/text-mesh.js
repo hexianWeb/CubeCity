@@ -119,6 +119,7 @@ export default class TextMesh {
           color,
           transparent: true,
           opacity: 0.9,
+          flatShading: true,
         })
         const transparentMaterial = new THREE.MeshPhongMaterial({
           color: 0x97_DF_5E,
@@ -126,6 +127,7 @@ export default class TextMesh {
           opacity: 0,
           shininess: 200,
           specular: '#ffffff',
+          flatShading: true,
         })
         if (letter === ' ') {
           // 如果是空格，只增加偏移量
